@@ -1,0 +1,24 @@
+if(suunta.equals("6") && (this.sijainti.equals("ru1"))){
+			sijainti = "ru2";
+		}
+		if(suunta.equals("4") && (this.sijainti.equals("ru2"))){
+			sijainti = "ru1";
+		}
+		if(suunta.equals("6") && (this.sijainti.equals("ru3"))){
+			sijainti = "ru4";
+		}
+		if(suunta.equals("4") && (this.sijainti.equals("ru4"))){
+			sijainti = "ru3";
+		}
+		if(suunta.equals("2") && (this.sijainti.equals("ru1"))){
+			sijainti = "ru3";
+		}
+		if(suunta.equals("8") && (this.sijainti.equals("ru3"))){
+			sijainti = "ru1";
+		}
+		if(suunta.equals("2") && (this.sijainti.equals("ru2"))){
+			sijainti = "ru4";
+		}
+		if(suunta.equals("8") && (this.sijainti.equals("ru4"))){
+			sijainti = "ru2";
+		}
