@@ -1,0 +1,25 @@
+CREATE NEW CMD Loop
+
+CREATE NEW INT $i
+CREATE NEW INT $j
+CREATE NEW INT $k
+SET $i 0
+SET $j 0
+SET $k 0
+
+DO
+SET $j [$i + $j]
+SET $i [$i + 1]
+IF $i > 9 THEN GOTO ENDDO
+#DO
+#SET $k [$k * 2]
+#IF $k > 45 THEN GOTO ENDDO
+#ENDDO
+ENDDO
+
+PRINT $j
+PRINT $k
+
+ENDCREATE
+
+PROCEED Loop
