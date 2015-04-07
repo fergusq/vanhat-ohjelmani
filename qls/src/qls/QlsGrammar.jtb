@@ -1,0 +1,274 @@
+/**
+ * JTB template file created by SF JavaCC plugin 1.5.17+ wizard for JTB 1.4.0.2+ and JavaCC 1.5.0+
+ */options{  JDK_VERSION = "1.5";  static = true;}PARSER_BEGIN(Qls)package qls;
+
+import java.io.FileInputStream;
+import java.io.File;
+import qls.syntaxtree.*;import qls.visitor.*;
+import qls.interpreter.*;
+import qls.core.*;
+public class Qls{  public static void main(String args [])  {
+
+	FileInputStream in = null;
+	try	{	  in = new FileInputStream(new File(args[0]));
+  	} catch (Exception e)  	{
+  	  System.out.println("Reading from standard input...");  	}
+  	System.out.println("Happy hacking! :)");    new Qls(args.length == 0 ? System.in : in);    try    {      Start start = Qls.Start();      //DepthFirstVoidVisitor v = new MyVisitor();      //start.accept(v);	new Interpreter().visit(start);
+    }
+    catch (LanguageException e) {
+      System.out.println(e.getMessage());
+    }    catch (Exception e)    {      System.out.println("Oops.");      System.out.println(e.getMessage());
+      //e.printStackTrace();    }  }}class MyVisitor extends DepthFirstVoidVisitor{  public void visit(NodeToken n)  {    System.out.println("visit " + n.tokenImage);  }}PARSER_END(Qls)SKIP :{  " "| "\t"| "\n"| "\r"| < "//" (~[ "\n", "\r" ])*    (      "\n"    | "\r"    | "\r\n"    ) >| < "/*" (~[ "*" ])* "*"    (      ~[ "/" ] (~[ "*" ])* "*"    )*    "/" >}
+TOKEN : /*
+KEYWORDS */
+{
+      < USE: "use" >
+|     < IF: "if" >
+|     < THEN: "then" >
+|     < WHILE: "while" >
+|     < DO: "do" >
+|     < END: "end" >
+|     < LOCAL : "local" >
+|     < CREATE : "create" >
+|     < NEW : "new" >
+|     < TO : "to" >
+|     < SET : "set" >
+|     < PROCEED : "proceed" >
+|     < MAIN : "main" >
+|     < GLOBAL : "global" >
+|     < ME : "me" >
+|     < GETFROM : "getfrom" >
+|     < RETURN : "return" >
+
+|     < CMD : "cmd" >
+|     < INT : "int" >
+|     < STRING : "string" >
+|     < FUNCTION : "function" >
+|     < VARARRAY : "vararray" >
+}
+
+TOKEN : /*
+SYMBOLS */
+{
+      < DOT: "." >
+|     < COLON: ":" >
+|     < COMMA: "," >
+|     < ARROW: "->" >
+|     < EQ: "=" >
+|     < GT: ">"  >
+|     < LT: "<"  >
+|     < GE: ">=" >
+|     < LE: "<=" >
+|     < NE: "<>" >
+|     < PLUS: "+">
+|     < MINUS: "-" >
+|     < MUL: "*" >
+|     < DIV: "/" >
+|     < MOD: "%" >
+|     < AND: "&">
+}
+TOKEN : /* LITERALS */{  < INTEGER_LITERAL :    < DECIMAL_LITERAL > ([ "l", "L" ])?  | < HEX_LITERAL > ([ "l", "L" ])?  | < OCTAL_LITERAL > ([ "l", "L" ])?     >| < #DECIMAL_LITERAL : [ "1"-"9" ] ([ "0"-"9" ])* >| < #HEX_LITERAL : "0" [ "x", "X" ] ([ "0"-"9", "a"-"f", "A"-"F" ])+ >| < #OCTAL_LITERAL : "0" ([ "0"-"7" ])* >
+ | < STRING_LITERAL :"'"((~["'", "\\"])
+  | ("\\"(["n", "t", "b", "r", "f", "\\", "'", "\""]
+  | ["0"-"7"](["0"-"7"])?
+  | ["0"-"3"]["0"-"7"]["0"-"7"])))*"'">}TOKEN : /* IDENTIFIERS */{  < IDENTIFIER :    < LETTER >    (      < LETTER >    | < DIGIT >    )* >| < #LETTER : [ "_", "a"-"z", "A"-"Z" ] >| < #DIGIT : [ "0"-"9" ] >}void Start():{}
+{
+  (
+    Use() "."
+  )*
+
+  "me"
+
+  (
+    GlobalExpression()
+  )*
+  Main()
+  (
+    GlobalExpression()
+  )*
+
+  "end"
+}
+void GlobalExpression():{}
+{
+  FieldDeclaration()
+| CreateNew()
+
+}
+
+void CreateNew():{}
+{
+      "create" "new" (FuncExpression() | CmdExpression())
+}
+
+void Use():{}
+{
+      "use"
+      (
+        < IDENTIFIER >
+      )+
+}
+
+void Main():{}
+{
+      "main"
+            (
+              StatementExpression()
+            ) *
+      "end"
+}
+
+void StatementExpression():{}
+{
+  VariableDeclaration()
+| LOOKAHEAD(2) VariableAssign()
+| JavaStaticMethods()
+| IfExpression()
+| WhileExpression()
+| CmdExpression()
+| Proceed()
+}
+
+void FieldDeclaration():{}
+{
+      "global" VariableName() "to" VariableValue() "."
+}
+
+void VariableDeclaration():{}
+{
+      "local" VariableName() "to" VariableValue() "."
+}
+
+void VariableAssign():
+{}
+{
+      "set" VariableName() "to" VariableValue() "."
+}
+
+void VariableValue():{}
+{
+      LOOKAHEAD(2) < STRING_LITERAL > | MathExpression() | GetFrom()
+}
+
+void GetFrom():{}
+{
+      "getfrom" VariableName()
+}
+
+void VariableName():{}
+{
+      < IDENTIFIER >
+}
+
+void Proceed():{}
+{
+      "proceed" VariableName() "."
+}
+
+void JavaStaticMethods():{}
+{
+      < IDENTIFIER > /* Method Name */
+      "(" (VariableValue() ( "," VariableValue() )*)? ")" "->"
+      < IDENTIFIER > /* Class Name */
+      (
+        "," < IDENTIFIER > /* Member */
+      )*
+	  "."
+      
+
+}
+
+void IfExpression():{}
+{
+      "if" RelationalExpression() "then"
+            (
+              StatementExpression()
+            ) *
+      "end"
+}
+
+void WhileExpression():{}
+{
+      "while" RelationalExpression() "then"
+            (
+              StatementExpression()
+            ) *
+      "end"
+}
+
+void CmdExpression():{}
+{
+      "cmd" VariableName()
+            (
+              StatementExpression()
+            ) *
+      "end"
+}
+
+void FuncExpression():{}
+{
+      "function" VariableName()
+            (
+              StatementExpression()
+            ) *
+            ReturnStatement() "."
+      "end"
+}
+
+void ReturnStatement() :
+{}
+{
+  "return" VariableValue() | LOOKAHEAD(2) JavaStaticMethods() 
+}
+void MathExpression() :{}{  AdditiveExpression()}void AdditiveExpression() :{}{  MultiplicativeExpression()  (    (      "+"    | "-"
+    | "&"    )    MultiplicativeExpression()  )*}void MultiplicativeExpression() :{}{  UnaryExpression()  (    (      "*"    | "/"    | "%"    )    UnaryExpression()  )*}void UnaryExpression():{}
+{
+  "(" MathExpression() ")" | < INTEGER_LITERAL > | < STRING_LITERAL > | VariableName()
+}
+/* Start Simple Relational Test */
+void RelationalExpression():{}
+{
+      RelationalEqualityExpression()
+}
+
+void RelationalEqualityExpression():{}
+{
+      RelationalGreaterExpression()
+      (
+        (
+           "==" | "!="
+        )
+        RelationalGreaterExpression()
+      )*
+}
+
+void RelationalGreaterExpression():{}
+{
+      RelationalLessExpression()
+      (
+        (
+           ">" | ">="
+        )
+         RelationalLessExpression()
+      )*
+}
+
+void RelationalLessExpression():{}
+{
+      UnaryRelational()
+      (
+        (
+           "<" | "<="
+        )
+
+        UnaryRelational()
+
+      )*
+}
+
+void UnaryRelational():{}
+{
+         < INTEGER_LITERAL > | < STRING_LITERAL > |
+VariableName()
+}
+void Identifier() :{}{  < IDENTIFIER >}void MyInteger() :{}{  < INTEGER_LITERAL >}
