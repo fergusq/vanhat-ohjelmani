@@ -1,0 +1,285 @@
+Q# - Qls - Qsl - Meret
+
+---
+Q#
+
+Q Sharp
+
+Ensimmäinen Q-perheen kielistä.
+Se esitteli ensimmäisen version Q:n syntaksista,
+joka on tietenkin muuttunut paljon ajan kuluessa.
+
+Se on kuitenkin säilyttänyt tärkeimmät avainsanansa
+lähes kostkemattomina. Näistä avainsanoista esitelkäköön
+mm.
+
+CREATE NEW  - rakenne   *
+PROCEED     - avainsana *
+SET         - avainsana *
+IF ... THEN - rakenne
+
+* Poistettu Meret-kielestä
+
+Alkuperäistä Q# koodia:
+
+->	create new int $count
+->	set $count 2
+->	
+->	create new cmd exp
+->		create new int $i
+->		print "Type number to ext (0 to exit)"
+->		set $i input
+->		if $i = 0 then endcreate
+->		create new int $j
+->		set $j [$i ^ 2] #             []-sulut merkitsevät laskutoimitusta
+->		print ($i + " ^ 2 = " + $j) # ()-sulut merkitsevät merkkijonojen yhteenliittämistä
+->		goto 0
+->	endcreate
+->	
+->	set $count [$count - 1]
+->	
+->	if $count > 0 then proceed exp
+
+Funktioesimerkki:
+
+->	create new function ?div withparams [int a, int b]
+->		return [$a / $b]
+->	endcreate
+->
+->	print ?div 8; 2
+
+Esimerkki:
+
+->	use !Sys
+->	
+->	create new cmd helloWorld
+->		print "Hello World!"
+->		create new string $user
+->		set $user !Sys?getUser
+->		print ("You are " + $user)
+->	endcreate
+->	
+->	proceed helloWorld
+
+---
+Qls
+
+Q Language for Scripts
+
+Toinen Q-perheen kielistä. Sen syntaksi lisättiin
+mm. sulut funktioihin. 
+
+Sys-kirjasto syrjäytti monia sisäänrakennettuja
+komentoja, kuten:
+
+print  = !Sys!console?println(string)
+type   = !Sys!console?print(string)
+input  = !Sys!console?input()
+rnd    = !Sys!math?rnd(int)
+
+Tämän kielen kehitys on lopetettu.
+
+Esimerkki:
+
+->	use !Sys
+->	
+->	create new cmd helloWorld
+->		!Sys!console?println("Hello World!")
+->		create new string $user
+->		set $user !Sys?getUser()
+->		!Sys!console?println("You are " + $user)
+->	endcreate
+->	
+->	proceed helloWorld
+
+---
+Qsl
+
+Q Script Language
+
+Qsl on kehittyneempi versio Qls-kielestä.
+Sen syntaksi muuttui aiempiin Q-kieliin
+merkittävästi. Se on ensimmäinen kieli,
+joka vaatii pisteen (.) jokaisen komenon
+päätteeksi. Se sisälsi ensimmäisen
+onnistuneen Scope-järjestelmän, ja se
+pystyy lataamaan ulkoisia kirjastoja
+paljon tehokkaammin. Sen merkittävin
+lisäys on kuitenkin me-luokka.
+
+Jokainen ohjelma on oman me-luokkansa
+sisällä, ja sisältää main-lohkon, joka
+suoritetaan. Tämä mahdollistaa esim.
+global- ja local-scopen erottelun.
+
+Qsl on tällä hetkellä ainoa
+kehityksessä oleva kieli Q#:n
+lisäksi.
+
+Global- ja local-scope:
+
+->	use Sys.
+->	
+->      me
+->		global i to 2.
+->		
+->		create new cmd checkI
+->			local i to 1.
+->			println('local i  = ' + i)->Sys,console. # returns 1
+->		end
+->		
+->		main
+->			proceed checkI.
+->			println('global i = ' + i)->Sys,console. # returns 2
+->		end
+->
+->	end
+
+Esimerkki:
+
+->	use Sys.
+->	
+->      me
+->		create new cmd helloWorld
+->			println('Hello World!')->Sys,console.
+->			local user to ''.
+->			set user to getUser()->Sys.
+->			println('You are ' + user)->Sys,console.
+->		end
+->		
+->		main
+->			proceed helloWorld.
+->		end
+->
+->	end
+
+---
+Meret
+
+Meret on neljäs Q-perheen kielistä.
+Sen nimessä ei ole Q-kirjainta, kuten
+edellisissä kielissä on. Meret tulee
+lauseesta me.ret(), jolla palautetaan
+funktion arvo.
+
+Meret esitteli ensimmäisenä suluilla 
+määriretyt lohkot. Se hylkäsi monta
+vanhaa rakennetta, kuten
+
+CREATE NEW - rakenne
+END 	   - avainsana
+SET	   - avainsana
+RETURN	   - avainsana
+
+Funktioesimerkki:
+
+->	use Sys;
+->	
+->      me {
+->		function hello withparams [string, int] to string {
+->			me.ret(("Hello " + me.params(1) + "! ")*me.params(2));
+->		}
+->
+->		function helloWorld to string {
+->			me.ret(hello("World", 3));
+->		}
+->		
+->		main to none {
+->			Sys.console.println(helloWorld()); # Prints 'Hello World! Hello World! Hello World! '
+->			me.ret(none);		
+->		}
+->
+->	}
+
+Esimerkki:
+
+->	use Sys;
+->	
+->      me {
+->		cmd helloWorld {
+->			Sys.console.println("Hello World!");
+->			local user to "";
+->			user to Sys.getUser();
+->			Sys.console.println("You are " + user);
+->		}
+->		
+->		main to none {
+->			proceed(helloWorld);
+->			me.ret(none);		
+->		}
+->
+->	}
+
+
+---
+Vertailu
+
+Avainsanat	Q#	Qls	Qsl	Meret
+
+USE		X	X	X	X
+ME		ei	ei	X	X
+MAIN		ei	ei	X	X
+GLOBAL		ei	ei	X	X
+LOCAL		ei	ei	X	X		-------------------------
+DO		X	X	X	X		| Merkkien selitykset:  |
+ENDDO		X	X	ei	ei		|			|
+FOR		*	*	*	*		|X  =	Sisältyy	|
+ENDFOR		*	*	ei	ei		|*  =	Sisäinen tuki	|
+WHILE		*	*	X	X		|** =	Ei käytössä	|
+ENDWHILE	*	*	ei	ei		|ei =	Ei sisälly	|
+IF		X	X	X	X		|			|
+THEN		X	X	X	ei		-------------------------
+ELSE		*	*	*	*		
+ENDIF		*	*	ei	ei
+RETURN		X	X	X	**
+END		ei	ei	X	ei
+CREATE		X	X	X	ei
+NEW		X	X	X	ei
+ENDCREATE	X	X	ei	ei
+SET		X	X	X	**
+GETFROM		X	X	X	ei
+PRINT		X	*	*	*
+TYPE		X	*	*	*
+PROCEED		X	X	X	X
+GOTO		X	**	*	*
+TO		ei	ei	X	X
+WITHPARAMS	X	ei	ei	X
+IS		ei	ei	ei	X
+
+
+Datatyypit	Q#	Qls	Qsl	Meret
+
+INT		X	X	X	X		-------------------------
+STRING		X	X	X	X		| Merkkien selitykset:  |
+VARARRAY	X	*	*	*		|			|
+FUNCTION	X	X	X	X		|X  =	Sisältyy	|
+CMD		X	X	X	X		|*  =	Sisäinen tuki	|
+NONE		**	**	**	X		|** =	Ei käytössä	|
+SHORT		ei	ei	*	*		|ei =	Ei sisälly	|
+CHAR		ei	ei	*	*		|			|
+DOUBLE		ei	ei	*	*		-------------------------
+FLOAT		ei	ei	*	*		
+OBJECT		X*	ei	*	*
+UIOBJECT	X	ei	ei	ei		
+
+(X* = String on periaatteessa sama kuin object, mutta sitä voidaan käsitellä vain string:inä tai int:inä) 							
+							
+Rakenteet	Q#	Qls	Qsl	Meret
+
+CREATE NEW	X	X	X	**		-------------------------
+ME, MAIN	ei	ei	X	X		| Merkkien selitykset:  |
+SET [TO]	X	X	X	X		|			|
+IF [THEN]	X	X	X	X		|X  =	Sisältyy	|
+GLOBAL [TO]	ei	ei	X	X		|*  =	Sisäinen tuki	|
+LOCAL [TO]	ei	ei	X	X		|** =	Ei käytössä	|
+DO		*	*	X	X		|ei =	Ei sisälly	|
+FOR [IS]	*	*	*	*		|			|
+WHILE [THEN]	*	*	X	X		-------------------------
+RETURN		X	X	X	**		
+GETFROM		X	X	X	ei
+PRINT/TYPE	X	*	*	*
+PROCEED		X	X	X	X
+GOTO		X	**	*	*
+[FUNCTION]
+    WITHPARAMS	X	ei	ei	X
+UI		X	ei	ei	ei

@@ -1,0 +1,95 @@
+CHANGELOG
+
+---- Pre-Alpha ----
+
+Version Pre-Alpha 0.0:
+	- Print - command
+
+Version Pre-Alpha 0.1:
+	- Create new - structure
+	- Proceed - command
+	- Cmd - data type
+	- Function - data type
+	- Int - data type
+	- String - data type
+
+Version Pre-Alpha 0.2:
+	- Math operators ( +, -, *, /, ^ )
+
+Version Pre-Alpha 0.3:
+	- Input - command
+
+Version Pre-Alpha 0.4:
+	- If - structure
+
+
+---- Alpha ----
+
+Version Alpha 0.1:
+	- Ui-test
+
+Version Alpha 0.2:
+	- Uimsg - command
+
+Version Alpha 0.3:
+	- Initui - command
+	- Exitui - command
+	- Uiclear - command
+	- Uidraw - command
+
+Version Alpha 0.4:
+	- Uimenu - command
+	- Uinewmenu - command
+	- Uiwindow - command
+	- Uipaint - command
+
+-- Alpha 0.5 --
+
+Version Alpha 0.5:'
+	- Exception handling system
+	- Console exception (0x000000001)
+	- New version system
+
+Version Alpha 0.5.1:
+	- Do - loop
+	- Vararray - data type
+	- Support to While-loop
+
+Version Alpha 0.5.2:
+	- First release.
+
+Version Alpha 0.5.3:
+	- Type - command
+
+-- Alpha 0.6 --
+
+Version Alpha 0.6.0:
+	- Withparams - keyword
+	- Function can be have parameters
+
+Version Alpha 0.6.1:
+	- Variable not found exception (0x000000002)
+	- Arithmetic exception (0x000000003)
+	- While - loop
+
+-- Alpha 0.7 --
+
+Version Alpha 0.7.0:
+	- Simple debugger
+	- Explicit option
+		- If on:
+		 - Every variable must be declared before use
+		 - Every math operation must be right
+		- If off:
+		 - Undeclared variables are 0
+		 - If math operations are wrong (for example 1 / 0), the value is 0
+
+Version Alpha 0.7.1:
+	- Gc option
+
+Version Alpha 0.7.2:
+	- More array functions
+	- SET NEW ... -rakenne
+
+Version Alpha 0.7.3:
+	- echo-command
