@@ -1,0 +1,13 @@
+0
+	1
+	add
+	dup
+	10
+	eq
+	not
+	over
+	0
+	print
+	1
+	exch
+goto

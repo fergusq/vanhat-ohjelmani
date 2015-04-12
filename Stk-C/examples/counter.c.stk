@@ -1,0 +1,278 @@
+#__init pushr popr
+
+__init:
+	40 0 printm 1 1 printm 0 2 printm 10000 3 printm
+	#__main pushr
+	popr
+
+__main:
+	0 #main pushp
+	popr
+
+stralloc:
+	0 0 0 
+	flip
+	0 1 dupt pop
+	stralloc__dowhile1:
+	1 overf 1 add 1 dupt pop
+	0 overf 1 add 0 dupt pop
+		0 overf 3 add overf 0 eq not not #stralloc__dowhile1_exit exch goto
+	#stralloc__dowhile1 1 goto
+	stralloc__dowhile1_exit:
+	1 overf 1 add 1 dupt pop
+	0 overf 1 add 0 dupt pop
+	#malloc 1 overf exch 1 exch pushp 2 dupt pop
+	0 0 dupt pop
+	stralloc__dowhile2:
+		0 overf 3 add overf dup 2 overf 0 overf add printm pop
+	0 overf 1 add 0 dupt pop
+		0 overf 3 add overf 0 eq not not #stralloc__dowhile2_exit exch goto
+	#stralloc__dowhile2 1 goto
+	stralloc__dowhile2_exit:
+		0 overf 3 add overf dup 2 overf 0 overf add printm pop
+	2 overf popr
+	popr
+
+call:
+	
+	flip
+	pushr popr
+	popr
+
+malloc:
+	0 0 0 0 0 0 0 0 
+	flip
+	1 readm 0 dupt pop
+	1 1 dupt pop
+	malloc__label_continue:
+	malloc__while3:
+	1 overf not #malloc__while3_exit exch goto
+	0 overf 1 add 0 dupt pop
+	0 overf 3 dupt pop
+	0 overf readm 4 dupt pop
+	malloc__if4:
+	4 overf 1 eq not #malloc__if4_else exch goto
+	0 overf 1 add 0 dupt pop
+	0 overf readm 2 dupt pop
+	0 overf 2 overf add 1 add 0 dupt pop
+	#malloc__label_continue 1 goto
+	#malloc__if4_exit 1 goto
+	malloc__if4_else:
+	malloc__if4_exit:
+	0 overf 1 add 0 dupt pop
+	0 overf readm 2 dupt pop
+	malloc__if5:
+	2 overf 8 overf 4 add gt not #malloc__if5_else exch goto
+	0 1 dupt pop
+	1 dup 3 overf printm pop
+	8 overf dup 0 overf printm pop
+	0 overf 8 overf add 1 add 5 dupt pop
+	8 overf dup 5 overf printm pop
+	2 overf 8 overf sub 3 sub 6 dupt pop
+	malloc__if6:
+	2 overf 8 overf 3 add gt not #malloc__if6_else exch goto
+	0 overf 8 overf add 2 add 7 dupt pop
+	0 dup 7 overf printm pop
+	7 overf 1 add 7 dupt pop
+	6 overf dup 7 overf printm pop
+	7 overf 1 add 6 overf add 7 dupt pop
+	6 overf dup 7 overf printm pop
+	#malloc__if6_exit 1 goto
+	malloc__if6_else:
+	malloc__if6_exit:
+	#malloc__label_break_while 1 goto
+	#malloc__if5_exit 1 goto
+	malloc__if5_else:
+	malloc__if5_exit:
+	#malloc__while3 1 goto
+	malloc__while3_exit:
+	malloc__label_break_while:
+	0 overf 1 add 0 dupt pop
+	0 overf popr
+	popr
+
+free:
+	0 0 0 0 0 0 
+	flip
+	free__if7:
+	6 overf 0 eq not #free__if7_else exch goto
+	0 popr
+	#free__if7_exit 1 goto
+	free__if7_else:
+	free__if7_exit:
+	free__if8:
+	6 overf 2 sub readm 1 eq not not #free__if8_else exch goto
+	#error 83 101 103 109 101 110 116 97 116 105 111 110 32 102 97 117 108 116 0 19 #stralloc pushp exch 47 104 111 109 101 47 105 105 107 107 97 47 46 115 116 107 99 47 115 116 100 108 105 98 47 115 116 100 46 104 0 31 #stralloc pushp exch 132 exch 3 exch pushp pop
+	#free__if8_exit 1 goto
+	free__if8_else:
+	free__if8_exit:
+	6 overf 1 sub 0 dupt pop
+	0 overf readm 0 dupt pop
+	6 overf 0 overf add 1 add 1 dupt pop
+	free__label_doTestAddr:
+	free__if9:
+	1 overf 9999 lt not #free__if9_else exch goto
+	free__if10:
+	1 overf readm 0 eq not #free__if10_else exch goto
+	1 overf 1 add 2 dupt pop
+	0 overf 3 add 2 overf readm add 0 dupt pop
+	6 overf 0 overf add 1 add 1 dupt pop
+	#free__if10_exit 1 goto
+	free__if10_else:
+	free__if10_exit:
+	#free__if9_exit 1 goto
+	free__if9_else:
+	free__if9_exit:
+	6 overf 3 sub 1 dupt pop
+	1 overf readm 3 dupt pop
+	1 overf 3 overf sub 2 sub 1 dupt pop
+	free__if11:
+	1 overf 0 gt not #free__if11_else exch goto
+	free__if12:
+	1 overf readm 0 eq not #free__if12_else exch goto
+	1 overf 1 add 2 dupt pop
+	0 overf 3 add 2 overf readm add 0 dupt pop
+	1 overf 2 add 6 dupt pop
+	#free__if12_exit 1 goto
+	free__if12_else:
+	free__if12_exit:
+	#free__if11_exit 1 goto
+	free__if11_else:
+	free__if11_exit:
+	6 overf 1 sub 4 dupt pop
+	0 overf dup 4 overf printm pop
+	6 overf 2 sub 4 dupt pop
+	0 dup 4 overf printm pop
+	6 overf 0 overf add 5 dupt pop
+	0 overf dup 5 overf printm pop
+	popr
+
+error:
+	
+	flip
+	#printf 37 115 58 37 105 58 32 37 115 10 0 11 #stralloc pushp exch 1 overf exch 2 overf exch 0 overf exch 4 exch pushp pop
+	throw
+	popr
+
+puts:
+	
+	flip
+	puts__while13:
+	0 overf readm not #puts__while13_exit exch goto
+	#putc 0 overf readm exch 1 exch pushp pop
+	0 overf 1 add 0 dupt pop
+	#puts__while13 1 goto
+	puts__while13_exit:
+	popr
+
+printsd:
+	
+	flip
+	#puts 0 overf exch 1 exch pushp pop
+	#free 0 overf exch 1 exch pushp pop
+	popr
+
+printsn:
+	
+	flip
+	printsn__while14:
+	0 overf readm not #printsn__while14_exit exch goto
+	#printn 0 overf readm exch 1 exch pushp pop
+	0 overf 1 add 0 dupt pop
+	#printsn__while14 1 goto
+	printsn__while14_exit:
+	popr
+
+printf:
+	0 0 
+	flip
+	2 overf 0 dupt pop
+	0 1 dupt pop
+	0 1 dupt pop
+	printf__for15:
+	2 overf readm not #printf__for15_exit exch goto
+	printf__if16:
+	2 overf readm 37 eq not not #printf__if16_else exch goto
+	#putc 2 overf readm exch 1 exch pushp pop
+	#printf__label_continue 1 goto
+	#printf__if16_exit 1 goto
+	printf__if16_else:
+	printf__if16_exit:
+	2 overf 1 add 2 dupt pop
+	printf__if17:
+	2 overf readm 37 eq not #printf__if17_else exch goto
+	#putc 37 exch 1 exch pushp pop
+	#printf__if17_exit 1 goto
+	printf__if17_else:
+	printf__if18:
+	2 overf readm 99 eq not #printf__if18_else exch goto
+	#putc 	1 overf 1 add 1 dupt 2 add overf exch 1 exch pushp pop
+	#printf__if18_exit 1 goto
+	printf__if18_else:
+	printf__if19:
+	2 overf readm 115 eq not #printf__if19_else exch goto
+	#puts 	1 overf 1 add 1 dupt 2 add overf exch 1 exch pushp pop
+	#printf__if19_exit 1 goto
+	printf__if19_else:
+	printf__if20:
+	2 overf readm 100 eq 2 overf readm 105 eq or not #printf__if20_else exch goto
+	#putint 	1 overf 1 add 1 dupt 2 add overf exch 1 exch pushp pop
+	#printf__if20_exit 1 goto
+	printf__if20_else:
+	printf__if20_exit:
+	printf__if19_exit:
+	printf__if18_exit:
+	printf__if17_exit:
+	printf__label_continue:
+	2 overf 1 add dup 2 dupt pop pop
+	#printf__for15 1 goto
+	printf__for15_exit:
+	#free 0 overf exch 1 exch pushp pop
+	popr
+
+printn:
+	
+	flip
+	0 print 10 1 print
+	popr
+
+putint:
+	
+	flip
+	0 print
+	popr
+
+putc:
+	
+	flip
+	1 print
+	popr
+
+getint:
+	
+	flip
+	0 read popr
+	popr
+
+getc:
+	
+	flip
+	1 read popr
+	popr
+
+i:
+	
+	flip
+	0 overf readm 1 add popr
+	popr
+
+main:
+	0 0 
+	flip
+	#i 0 dupt pop
+	5 1 dupt pop
+	#printf 37 105 0 3 #stralloc pushp exch 0 overf 1 ref exch 1 exch pushp exch 2 exch pushp pop
+	#printf 37 105 0 3 #stralloc pushp exch 0 overf 1 ref exch 1 exch pushp exch 2 exch pushp pop
+	#printf 37 105 0 3 #stralloc pushp exch 0 overf 1 ref exch 1 exch pushp exch 2 exch pushp pop
+	popr
+

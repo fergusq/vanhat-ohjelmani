@@ -1,0 +1,1 @@
+cpp -I "/home/iikka/.stkc/stdlib" $1 | /usr/lib/jvm/jdk1.8.0/bin/java -cp bin:../ParserTools/bin org.kaivos.stkc.parser.StkCParser -i

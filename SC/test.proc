@@ -1,0 +1,90 @@
+#include lib/string.stk
+#include lib/stdio.stk
+
+proc Math.div2 (int a, int b) {
+	a / b;
+}
+
+proc main (int a) {
+	local int i;
+	i = a;
+	local int j;
+	j = a+1;
+	while i < 20;
+		local int k;
+		k = i + j;
+		i = j; j = k;
+		print i;
+	endwhile;
+	goto somewhere;
+	j = 123;
+	define somewhere;
+	print j;
+
+	local Kirja kirja;
+	kirja = Tietokirja.new(0);
+
+	kirja.setSarjanumero(4); // Kirja sallisi tämän, mutta Tietokirja 
+				 // vaatii että sarjanumero on suurempi tai yhtäsuuri kuin 50
+
+	Out.printStr(String.new("Sarjanumero: \0"));
+	Out.printInt(kirja.getSarjanumero());
+
+	kirja.setSarjanumero(67); // Tämä sallitaan
+
+	Out.printStr(String.new("Sarjanumero: \0"));
+	Out.printInt(kirja.getSarjanumero());
+
+	local Kustantaja kustantaja;
+	kustantaja = Kustantaja.new(0);
+
+	kustantaja.setID(7);
+
+	kustantaja.julkaise(kirja);
+
+	local int div3; 
+	div3 = Math.div2(4, 2);
+	print div3;
+
+	local String merkkijono;
+	merkkijono = String.new("Hello World!\n\0");
+	merkkijono.print();
+
+	merkkijono.delete(0);
+	kustantaja.delete(0);
+	kirja.delete(0);
+}
+
+class Kustantaja {
+	global ID;
+	global proc setID (Kustantaja this, int i) {
+		i; setfield Kustantaja.ID this;
+	};
+	global proc julkaise (Kustantaja this, Kirja kirja) {
+		local int ID;
+		field Kustantaja.ID this; ID=;					// ID = this.ID;
+		print ID;
+		local int sarjanumero;
+		sarjanumero = kirja.getSarjanumero();
+		print sarjanumero;
+	};
+}
+
+class Kirja {
+	global sarjanumero;
+	global proc setSarjanumero (Kirja this, int i) {
+		i; setfield Kirja.sarjanumero this;				// this.sarjanumero = i;
+	};
+	global proc getSarjanumero (Kirja this) {
+		field Kirja.sarjanumero this;					// this.sarjanumero;
+	};
+}
+
+class Tietokirja = Kirja {
+	global reproc setSarjanumero (Tietokirja this, int i) {
+		// Tietokirjojen sarjanumero ei voi olla <50
+		while i > 49;
+			i; setfield Kirja.sarjanumero this;
+		break; endwhile;
+	}
+}

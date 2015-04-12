@@ -1,0 +1,258 @@
+!count_to 20
+
+start:
+	"Hello World!" 10 0 14 #print pushp	; tulostaa 'Hello World!\n'
+	
+	1 0 print 10 1 print			; tulostaa '1'
+	#func1 pushr 				; kutsuu funktiota #func1
+
+	2 0 print 10 1 print			; tulostaa '2'
+	&count_to 1 #count pushp		; kutsuu funktiota #count parametrina 20
+	0 print 10 1 print			; tulostaa funktion #count paluuarvon
+	
+	3 0 print 10 1 print			; tulostaa '3'
+	#fib pushr				; kutsuu funktiota #fib
+	0 print 10 1 print			; tulostaa funktion paluuarvon
+
+	4 0 print 10 1 print			; tulostaa '4'
+	#pp pushr				; kutsuu funktiota #pp
+
+	5 0 print 10 1 print			; tulostaa '5'
+	#readname pushr				; kutsuu funktiota #readname
+
+	6 0 print 10 1 print			; tulostaa '5'
+	
+	#Main.main pushr			; kutsuu funktiota #Main.main
+
+	popr					; poistuu ohjelmasta
+
+func1:							; käännetty fibluvut		HUOMAA: Kääntäjä käyttää
+	inits(3)					; local i; local j; local k;	paljon esikääntäjän
+	0 secv(0) 					; i = 0;			funktioita mikä ei ole
+	1 secv(1) 					; j = 1;			suositeltavaa. Vertaa
+	while0: dupc(0) 20 lt not #outwhile0 exch goto	; while i < 20;			fib-funktioon alempana,
+	dupc(0) dupc(1) add secv(2) 			; 	k = i + j;		joka on kirjoitettu käsin.
+	dupc(1) secv(0) 				;	i = j;
+	dupc(2) secv(1) 				;	j = k;
+	dupc(0) 0 print 10 1 print			;	print i;
+	#while0 1 goto outwhile0: 			; endwhile;
+	popr						; // return;
+
+
+
+count:					; laskee parametrina saatuun lukuun
+	0				; laitetaan pinoon 0
+	loop: 	1 add			; lisätään 1
+		dup 0 print ',' 1 print	; tulostetaan arvo ja ','
+		dup over eq not		; mikäli arvo ei ole pinon ensimmäinen luku (parametri)
+		#loop exch goto		; hyppää labeliin loop
+	popr
+
+fib:					; fibonaccin luvut
+	0 1				; alustetaan stackiin 0 ja 1
+	fibloop:			; label
+		dup over add		; tuodaan arvo pinon alapäästä ylös ja lisätään siihen pinon ylimmäinen luku
+		rotl pop		; poistetaan pinon alimmainen arvo
+		dup 0 print ',' 1 print	; tulostetaan arvo ja ','
+		dup 50 gt not		; jos arvo on pienempi tai yhtäsuuri kuin 50 ...
+		#fibloop exch goto	; hyppää fibloop labeliin
+	popr
+
+pp:					; Testataan esikääntäjän funktioita
+	inits(8)			; initoidaan 7 muuttujaa
+	11 secv(0)			; muuttujan nolla arvoksi asetetaan 11
+	12 secv(1)			; muuttujan yksi arvoksi asetetaan 12
+	13 secv(1)			; vaihdetaan arvoksi 13
+	14 secv(2)			; muuttujan 2 arvoksi asetetaan 14
+	15 secv(4)			; jne...
+	16 secv(5)
+	17 secv(6)
+	18 secv(7)
+	dupc(1) 0 print 10 1 print	; tulostetaan muuttujan 1 arvo
+	dupc(5) 0 print 10 1 print	; tulostetaan muuttujan 5 arvo
+	popr
+
+readname:
+	"Kirjoita nimesi: " 0 18 #print pushp pop
+	
+	rloop: 	1 read			; luetaan merkki
+		dup 10 eq not		; jos merkki ei ole \n ...
+		#rloop exch goto	; hyppää rlooppiin
+	pop				; poistetaan viimeinen merkki (\n)
+	flip 0 rotr			; käännetään pino ja laitetaan pinon loppuun 0
+
+	"Nimesi on: " 0 12 #print pushp pop
+					; print-funktio...
+	loop3: 	dup 1 print		; tulostaa merkin
+		0 eq not		; jos merkki ei ole 0 ...
+		#loop3 exch goto	; ... jatka loop3 labeliin
+	10 1 print			; tulostaa rivinvaihdon
+
+	popr
+
+print:					; funktio tekstien tulostamiseen
+	loop2: 	dup 1 print		; tulostaa merkin
+		0 eq not		; jos merkki ei ole 0 ...
+		#loop2 exch goto	; ... jatka loop2 labeliin
+	popr
+
+;;; OLIOPOHJAISEN OHJELMOINNIN MALLI
+
+;; CLASS Kirja
+
+!Kirja.size 	4
+!Kirja.realsize 4
+!Kirja.delete 	1
+!Kirja.setID 	2
+!Kirja.getID 	3
+!Kirja.ID 	4
+
+Kirja.new:
+	"Kirja.new" 10 0 11 #print pushp pop
+	0 readm 1 add 0 printm 				; Varaa lisää muistia
+	inits(1)
+	0 readm secv(0) 				; asetetaan this
+	0 readm &Kirja.size add 0 printm 		; varataan muistia
+	#Kirja.delete dupc(0) &Kirja.delete add printm	; lisätään metodit
+	#Kirja.getID dupc(0) &Kirja.getID add printm
+	#Kirja.setID dupc(0) &Kirja.setID add printm
+	3 dupc(0) &Kirja.ID add printm			; lisätään atribuutit (this.ID = 3)
+	dupc(0)	popr					; palautetaan this
+
+Kirja.delete:
+	"Kirja.delete" 10 0 14 #print pushp pop
+	0 readm 1 sub 0 printm				; Vapautetaan muisti
+	0 readm &Kirja.size sub 0 printm		; Vapautetaan muisti
+	popr
+
+Kirja.setID:
+	inits(0)
+	dupc(1) dupc(0) &Kirja.ID add printm
+	popr
+
+Kirja.getID:
+	inits(0)
+	dupc(0) &Kirja.ID add readm
+	popr
+
+;; END OF CLASS Kirja
+
+;; CLASS Tietokirja = Kirja
+
+!Tietokirja.size 	4
+!Tietokirja.realsize	&Tietokirja.size &Kirja.realsize add
+!Tietokirja.delete	&Kirja.realsize 1 add
+!Tietokirja.setAihe	&Kirja.realsize 2 add
+!Tietokirja.getAihe	&Kirja.realsize 3 add
+!Tietokirja.aihe	&Kirja.realsize 4 add
+
+Tietokirja.new:
+	"Tietokirja.new" 10 0 16 #print pushp pop
+	inits(1)
+	#Kirja.new pushr secv(0) 					; asetetaan this = super()
+	0 readm &Tietokirja.size add 0 printm 				; varataan muistia
+	#Tietokirja.delete dupc(0) &Tietokirja.delete add printm	; lisätään metodit
+	#Tietokirja.getAihe dupc(0) &Tietokirja.getAihe add printm
+	#Tietokirja.setAihe dupc(0) &Tietokirja.setAihe add printm
+	7 dupc(0) &Tietokirja.aihe add printm				; lisätään atribuutit (this.aihe = 7)
+	dupc(0)	popr					; palautetaan this
+
+Tietokirja.delete:			
+	"Tietokirja.delete" 10 0 19 #print pushp pop
+	&Kirja.delete pushr				; Vapautetaan muisti (super)
+	0 readm &Tietokirja.size sub 0 printm		; Vapautetaan muisti
+	popr
+
+Tietokirja.setAihe:
+	inits(0)
+	dupc(1) dupc(0) &Tietokirja.aihe add printm
+	popr
+
+Tietokirja.getAihe:
+	inits(0)
+	dupc(0) &Tietokirja.aihe add readm
+	popr
+
+;; END OF CLASS Tietokirja
+
+;; CLASS Kustantaja
+
+!Kustantaja.size 	5
+!Kustantaja.realsize 	5
+!Kustantaja.delete 	1
+!Kustantaja.setID 	2
+!Kustantaja.getID 	3
+!Kustantaja.julkaise 	4
+!Kustantaja.ID 		5
+
+Kustantaja.new:
+	0 readm 1 add 0 printm 				; Varaa lisää muistia
+	inits(1)
+	0 readm secv(0) 				; asetetaan this
+	0 readm &Kustantaja.size add 0 printm 		; varataan muistia
+	#Kustantaja.delete dupc(0) &Kustantaja.delete add printm	; lisätään metodit
+	#Kustantaja.getID dupc(0) &Kustantaja.getID add printm
+	#Kustantaja.setID dupc(0) &Kustantaja.setID add printm
+	#Kustantaja.julkaise dupc(0) &Kustantaja.julkaise add printm
+	9 dupc(0) &Kustantaja.ID add printm			; lisätään atribuutit (this.ID = 3)
+	"Kustantaja.new" 10 0 16 #print pushp
+	dupc(0)	popr					; palautetaan this
+
+Kustantaja.delete:
+	"Kustantaja.delete" 10 0 19 #print pushp
+	0 readm 1 sub 0 printm				; Vapautetaan muisti
+	0 readm &Kustantaja.size sub 0 printm		; Vapautetaan muisti
+	popr
+
+Kustantaja.setID:
+	inits(0)
+	dupc(1) dupc(0) &Kustantaja.ID add printm
+	popr
+
+Kustantaja.getID:
+	inits(0)
+	dupc(0) &Kustantaja.ID add readm
+	popr
+
+Kustantaja.julkaise:
+	%!julkaise
+	inits(0)
+	dupc(0) &Kustantaja.ID add readm 0 print
+	',' 1 print	
+	dupc(1) 1 dupc(1) &Kirja.getID add readm pushp 0 print
+	10 1 print
+	popr
+
+;; END OF CLASS Kustantaja
+
+;; CLASS Main
+
+!Main.size	1
+!Main.realsize	1
+!Main.delete	1
+
+Main.new:
+	0 readm 1 add 0 printm 				; Varaa lisää muistia
+	inits(1)
+	0 readm secv(0) 				; asetetaan this
+	0 readm &Main.size add 0 printm 		; varataan muistia
+	#Main.delete dupc(0) &Main.delete add printm	; lisätään metodit
+	"Main.new" 10 0 10 #print pushp
+	dupc(0)	popr					; palautetaan this
+
+Main.delete:
+	"Main.delete" 10 0 13 #print pushp
+	0 readm 1 sub 0 printm				; Vapautetaan muisti
+	0 readm &Main.size sub 0 printm			; Vapautetaan muisti
+	popr
+
+Main.main:
+	inits(3)
+	#Kustantaja.new pushr secv(0)
+	#Tietokirja.new pushr secv(1)
+	dupc(1) dupc(0) 2 dupc(0) &Kustantaja.julkaise add readm pushp
+	dupc(1) &Kirja.delete add readm pushr
+	dupc(0) &Kustantaja.delete add readm pushr
+	popr
+
+;; END OF CLASS Main

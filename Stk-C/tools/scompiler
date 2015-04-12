@@ -1,0 +1,35 @@
+CDIR=`pwd`
+DIR=`dirname $1`
+ODIR=`dirname $2`
+
+LIBRARY_CC_FLAGS="-lncurses"
+
+echo "Translating $1 -> $1.stk..."
+
+# Translate StkC -> Stk
+tools/stkc $1 >$1.stk
+
+echo "Assembling $1.stk -> $2..."
+
+# Assemble Stk -> Sbc
+tools/stk2sbc $1.stk $2
+
+if [ -f "___natives.c" ]
+then
+
+	echo "Compiling natives..."
+
+	cp ___natives.c $DIR
+	cd $DIR
+
+	gcc -c -fPIC $LIBRARY_CC_FLAGS ___natives.c -o ___natives.o
+	gcc -shared $LIBRARY_CC_FLAGS -Wl,-soname,libnatives.so.1 -o libnatives.so.1.0.1  ___natives.o
+
+	rm ___natives.c ___natives.o
+
+	cd $CDIR
+
+	mv $DIR/libnatives.so.1.0.1 $ODIR/libnatives.so
+fi
+
+echo "Done."

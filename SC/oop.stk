@@ -1,0 +1,181 @@
+0 1 #main pushp popr
+
+
+%include lib/object.stk
+
+%include lib/string.stk
+
+%include lib/stdio.stk
+
+;; CLASS Kustantaja = Object
+!Kustantaja.size		5
+!Kustantaja.realsize	5 &Object.realsize add
+
+; Methods
+!Kustantaja.delete	1
+!Kustantaja.julkaise	4
+!Kustantaja.setID	3
+
+; Fields
+!Kustantaja.ID	2
+
+;Constructor
+Kustantaja.new:
+	inits(1)
+	dupc(0) &Kustantaja.size add 1 #Object.new pushp secv(1)
+	#Kustantaja.delete dupc(1) &Kustantaja.delete add printm
+	#Kustantaja.julkaise dupc(1) &Kustantaja.julkaise add printm
+	#Kustantaja.setID dupc(1) &Kustantaja.setID add printm
+	0 dupc(1) &Kustantaja.ID add printm
+	dupc(1) popr
+
+;Destructor
+Kustantaja.delete:
+	dupc(1) dupc(0) &Kustantaja.size add 2 #Object.delete pushp				; Vapautetaan muisti (super)
+	popr
+;; END OF CLASS Kustantaja
+
+
+;; CLASS Kirja = Object
+!Kirja.size		5
+!Kirja.realsize	5 &Object.realsize add
+
+; Methods
+!Kirja.delete	1
+!Kirja.setSarjanumero	3
+!Kirja.getSarjanumero	4
+
+; Fields
+!Kirja.sarjanumero	2
+
+;Constructor
+Kirja.new:
+	inits(1)
+	dupc(0) &Kirja.size add 1 #Object.new pushp secv(1)
+	#Kirja.delete dupc(1) &Kirja.delete add printm
+	#Kirja.setSarjanumero dupc(1) &Kirja.setSarjanumero add printm
+	#Kirja.getSarjanumero dupc(1) &Kirja.getSarjanumero add printm
+	0 dupc(1) &Kirja.sarjanumero add printm
+	dupc(1) popr
+
+;Destructor
+Kirja.delete:
+	dupc(1) dupc(0) &Kirja.size add 2 #Object.delete pushp				; Vapautetaan muisti (super)
+	popr
+;; END OF CLASS Kirja
+
+
+;; CLASS Tietokirja = Kirja
+!Tietokirja.size		2
+!Tietokirja.realsize	2 &Kirja.realsize add
+
+; Methods
+!Tietokirja.delete	1
+!Tietokirja.setSarjanumero	&Kirja.setSarjanumero
+
+; Fields
+
+;Constructor
+Tietokirja.new:
+	inits(1)
+	dupc(0) &Tietokirja.size add 1 #Kirja.new pushp secv(1)
+	#Tietokirja.delete dupc(1) &Tietokirja.delete add printm
+	#Tietokirja.setSarjanumero dupc(1) &Kirja.setSarjanumero add printm
+	dupc(1) popr
+
+;Destructor
+Tietokirja.delete:
+	dupc(1) dupc(0) &Tietokirja.size add 2 #Kirja.delete pushp				; Vapautetaan muisti (super)
+	popr
+;; END OF CLASS Tietokirja
+
+Kustantaja.julkaise:
+	flip
+; {kirja=[1, Kirja], sarjanumero=[3, int], ID=[2, int], this=[0, Kustantaja]}
+	inits(2)
+	&Kustantaja.ID dupc(0) add readm 
+	secv(2) 
+	dupc(2) 0 print 10 1 print
+	dupc(1) 1 dupc(1) &Kirja.getSarjanumero add readm pushp
+secv(3) 
+	dupc(3) 0 print 10 1 print
+	popr
+
+main:
+	flip
+; {kirja=[4, Kirja], kustantaja=[5, Kustantaja], a=[0, int], merkkijono=[7, String], j=[2, int], div3=[6, int], k=[3, int], i=[1, int]}
+	inits(7)
+	dupc(0) secv(1) 
+	dupc(0) 1 add secv(2) 
+	while0: dupc(1) 20 lt not #outwhile0 exch goto
+	dupc(1) dupc(2) add secv(3) 
+	dupc(2) secv(1) 
+	dupc(3) secv(2) 
+	dupc(1) 0 print 10 1 print
+	#while0 1 goto outwhile0: 
+	#user_somewhere 1 goto
+	123 secv(2) 
+	user_somewhere:
+	dupc(2) 0 print 10 1 print
+	0 1 #Tietokirja.new pushp
+secv(4) 
+	dupc(4) 4 2 dupc(4) &Kirja.setSarjanumero add readm pushp
+	0 32 58 111 114 101 109 117 110 97 106 114 97 83 14 #String.new pushp
+1 #Out.printStr pushp
+	dupc(4) 1 dupc(4) &Kirja.getSarjanumero add readm pushp
+1 #Out.printInt pushp
+	dupc(4) 67 2 dupc(4) &Kirja.setSarjanumero add readm pushp
+	0 32 58 111 114 101 109 117 110 97 106 114 97 83 14 #String.new pushp
+1 #Out.printStr pushp
+	dupc(4) 1 dupc(4) &Kirja.getSarjanumero add readm pushp
+1 #Out.printInt pushp
+	0 1 #Kustantaja.new pushp
+secv(5) 
+	dupc(5) 7 2 dupc(5) &Kustantaja.setID add readm pushp
+	dupc(5) dupc(4) 2 dupc(5) &Kustantaja.julkaise add readm pushp
+	dupc(6) 0 print 10 1 print
+	0 10 33 100 108 114 111 87 32 111 108 108 101 72 14 #String.new pushp
+secv(7) 
+	dupc(7) 1 dupc(7) &String.print add readm pushp
+	dupc(7) 0 2 dupc(7) &String.delete add readm pushp
+	dupc(5) 0 2 dupc(5) &Kustantaja.delete add readm pushp
+	dupc(4) 0 2 dupc(4) &Kirja.delete add readm pushp
+	popr
+
+Tietokirja.setSarjanumero:
+	flip
+; {this=[0, Tietokirja], i=[1, int]}
+	inits(0)
+	while1: dupc(1) 49 gt not #outwhile1 exch goto
+	dupc(1) 	&Kirja.sarjanumero dupc(0) add printm 
+	#outwhile1 1 goto
+	#while1 1 goto outwhile1: 
+	popr
+
+Kirja.setSarjanumero:
+	flip
+; {this=[0, Kirja], i=[1, int]}
+	inits(0)
+	dupc(1) 	&Kirja.sarjanumero dupc(0) add printm 
+	popr
+
+Kustantaja.setID:
+	flip
+; {this=[0, Kustantaja], i=[1, int]}
+	inits(0)
+	dupc(1) 	&Kustantaja.ID dupc(0) add printm 
+	popr
+
+Math.div2:
+	flip
+; {b=[1, int], a=[0, int]}
+	inits(0)
+	dupc(0) dupc(1) div 	popr
+
+Kirja.getSarjanumero:
+	flip
+; {this=[0, Kirja]}
+	inits(0)
+	&Kirja.sarjanumero dupc(0) add readm 
+	popr
+

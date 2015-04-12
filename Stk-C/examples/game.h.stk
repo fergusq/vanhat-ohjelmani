@@ -1,0 +1,359 @@
+#__init pushr popr
+
+__init:
+	40 0 printm 1 1 printm 0 2 printm 10000 3 printm
+	#__main pushr
+	popr
+
+__main:
+	0 #main pushp
+	popr
+
+stralloc:; char*: []
+	inits(3); [i: int, size: int, ptr: void*]
+	flip
+	0 1 dupt pop
+	stralloc__dowhile1:
+	1 overf 1 add 1 dupt pop
+	0 overf 1 add 0 dupt pop
+		0 overf 3 add overf 0 eq not not #stralloc__dowhile1_exit exch goto
+	#stralloc__dowhile1 1 goto
+	stralloc__dowhile1_exit:
+	1 overf 1 add 1 dupt pop
+	0 overf 1 add 0 dupt pop
+	1 overf 1 #malloc pushp 2 dupt pop
+	0 0 dupt pop
+	stralloc__dowhile2:
+		0 overf 3 add overf dup 2 overf 0 overf add printm pop
+	0 overf 1 add 0 dupt pop
+		0 overf 3 add overf 0 eq not not #stralloc__dowhile2_exit exch goto
+	#stralloc__dowhile2 1 goto
+	stralloc__dowhile2_exit:
+		0 overf 3 add overf dup 2 overf 0 overf add printm pop
+	2 overf popr
+	popr
+
+call:; void: [func: int]
+	inits(0); []
+	flip
+	pushr popr
+	popr
+
+malloc:; void*: [size: int]
+	inits(8); [i: int, bool: int, koko: int, osoite: int, varattu: int, temp7: int*, i5: int, nextAddr: int*]
+	flip
+	1 readm 0 dupt pop
+	1 1 dupt pop
+	malloc__label_continue:
+	malloc__while3:
+	1 overf not #malloc__while3_exit exch goto
+	0 overf 1 add 0 dupt pop
+	0 overf 3 dupt pop
+	0 overf readm 4 dupt pop
+	malloc__if4:
+	4 overf 1 eq not #malloc__if4_else exch goto
+	0 overf 1 add 0 dupt pop
+	0 overf readm 2 dupt pop
+	0 overf 2 overf add 1 add 0 dupt pop
+	#malloc__label_continue 1 goto
+#malloc__if4_exit 1 goto
+	malloc__if4_else:
+	malloc__if4_exit:
+	0 overf 1 add 0 dupt pop
+	0 overf readm 2 dupt pop
+	malloc__if5:
+	2 overf 8 overf 4 add gt not #malloc__if5_else exch goto
+	0 1 dupt pop
+	1 dup 3 overf printm pop
+	8 overf dup 0 overf printm pop
+	0 overf 8 overf add 1 add 5 dupt pop
+	8 overf dup 5 overf printm pop
+	2 overf 8 overf sub 3 sub 6 dupt pop
+	malloc__if6:
+	2 overf 8 overf 3 add gt not #malloc__if6_else exch goto
+	0 overf 8 overf add 2 add 7 dupt pop
+	0 dup 7 overf printm pop
+	7 overf 1 add 7 dupt pop
+	6 overf dup 7 overf printm pop
+	7 overf 1 add 6 overf add 7 dupt pop
+	6 overf dup 7 overf printm pop
+#malloc__if6_exit 1 goto
+	malloc__if6_else:
+	malloc__if6_exit:
+	#malloc__label_break_while 1 goto
+#malloc__if5_exit 1 goto
+	malloc__if5_else:
+	malloc__if5_exit:
+	#malloc__while3 1 goto
+	malloc__while3_exit:
+	malloc__label_break_while:
+	0 overf 1 add 0 dupt pop
+	0 overf popr
+	popr
+
+free:; void: [pointer: void*]
+	inits(6); [size: int, nextAddr: int, tmp1: int, temp3: int, size_addr: int*, temp7: int*]
+	flip
+	6 overf 1 sub 0 dupt pop
+	0 overf readm 0 dupt pop
+	6 overf 0 overf add 1 add 1 dupt pop
+	free__label_doTestAddr:
+	free__if7:
+	1 overf 9999 lt not #free__if7_else exch goto
+	free__if8:
+	1 overf readm 0 eq not #free__if8_else exch goto
+	1 overf 1 add 2 dupt pop
+	0 overf 3 add 2 overf readm add 0 dupt pop
+	6 overf 0 overf add 1 add 1 dupt pop
+#free__if8_exit 1 goto
+	free__if8_else:
+	free__if8_exit:
+#free__if7_exit 1 goto
+	free__if7_else:
+	free__if7_exit:
+	6 overf 3 sub 1 dupt pop
+	1 overf readm 3 dupt pop
+	1 overf 3 overf sub 2 sub 1 dupt pop
+	free__if9:
+	1 overf 0 gt not #free__if9_else exch goto
+	free__if10:
+	1 overf readm 0 eq not #free__if10_else exch goto
+	1 overf 1 add 2 dupt pop
+	0 overf 3 add 2 overf readm add 0 dupt pop
+	1 overf 2 add 6 dupt pop
+#free__if10_exit 1 goto
+	free__if10_else:
+	free__if10_exit:
+#free__if9_exit 1 goto
+	free__if9_else:
+	free__if9_exit:
+	6 overf 1 sub 4 dupt pop
+	0 overf dup 4 overf printm pop
+	6 overf 2 sub 4 dupt pop
+	0 dup 4 overf printm pop
+	6 overf 0 overf add 5 dupt pop
+	0 overf dup 5 overf printm pop
+	popr
+
+puts:; void: [str: char*]
+	inits(0); []
+	flip
+	puts__while11:
+	0 overf readm not #puts__while11_exit exch goto
+	0 overf readm 1 #putc pushp pop
+	0 overf 1 add 0 dupt pop
+	#puts__while11 1 goto
+	puts__while11_exit:
+	popr
+
+printsd:; void: [str: char*]
+	inits(0); []
+	flip
+	0 overf 1 #puts pushp pop
+	0 overf 1 #free pushp pop
+	popr
+
+printsn:; void: [str: char*]
+	inits(0); []
+	flip
+	printsn__while12:
+	0 overf readm not #printsn__while12_exit exch goto
+	0 overf readm 1 #printn pushp pop
+	0 overf 1 add 0 dupt pop
+	#printsn__while12 1 goto
+	printsn__while12_exit:
+	popr
+
+printf:; void: [s: char*]
+	inits(2); [s2: char*, i: int]
+	flip
+	2 overf 0 dupt pop
+	0 1 dupt pop
+	0 1 dupt pop
+	printf__for13:
+	2 overf readm not #printf__for13_exit exch goto
+	printf__if14:
+	2 overf readm 37 eq not not #printf__if14_else exch goto
+	2 overf readm 1 #putc pushp pop
+	#printf__label_continue 1 goto
+#printf__if14_exit 1 goto
+	printf__if14_else:
+	printf__if14_exit:
+	2 overf 1 add 2 dupt pop
+	printf__if15:
+	2 overf readm 37 eq not #printf__if15_else exch goto
+	37 1 #putc pushp pop
+#printf__if15_exit 1 goto
+	printf__if15_else:
+	printf__if16:
+	2 overf readm 99 eq not #printf__if16_else exch goto
+		1 overf 1 add 1 dupt 2 add overf 1 #putc pushp pop
+#printf__if16_exit 1 goto
+	printf__if16_else:
+	printf__if17:
+	2 overf readm 115 eq not #printf__if17_else exch goto
+		1 overf 1 add 1 dupt 2 add overf 1 #puts pushp pop
+#printf__if17_exit 1 goto
+	printf__if17_else:
+	printf__if18:
+	2 overf readm 100 eq 2 overf readm 105 eq or not #printf__if18_else exch goto
+		1 overf 1 add 1 dupt 2 add overf 1 #putint pushp pop
+#printf__if18_exit 1 goto
+	printf__if18_else:
+	printf__if18_exit:
+	printf__if17_exit:
+	printf__if16_exit:
+	printf__if15_exit:
+	printf__label_continue:
+	2 overf 1 add dup 2 dupt pop pop
+	#printf__for13 1 goto
+	printf__for13_exit:
+	0 overf 1 #free pushp pop
+	popr
+
+printn:; void: [n: char]
+	inits(0); []
+	flip
+	0 print 10 1 print
+	popr
+
+putint:; void: [n: int]
+	inits(0); []
+	flip
+	0 print
+	popr
+
+putc:; void: [n: char]
+	inits(0); []
+	flip
+	1 print
+	popr
+
+getint:; int: []
+	inits(0); []
+	flip
+	0 read popr
+	popr
+
+getc:; char: []
+	inits(0); []
+	flip
+	1 read popr
+	popr
+
+createStack:; Stack*: []
+	inits(1); [stack: Stack*]
+	flip
+	2 1 #malloc pushp 0 dupt pop
+	0 overf popr
+	popr
+
+push:; void: [stack: Stack**, data: void]
+	inits(1); [newStack: Stack*]
+	flip
+	2 1 #malloc pushp 0 dupt pop
+	2 overf 0 overf printm 0 pop
+	1 overf readm 0 overf 1 add printm 0 pop
+	0 overf dup 1 overf printm pop
+	popr
+
+pop:; void: [stack: Stack**]
+	inits(2); [prevStack: Stack*, data: void]
+	flip
+	pop__if19:
+	2 overf readm 1 add readm 0 eq not #pop__if19_else exch goto
+	0 popr
+#pop__if19_exit 1 goto
+	pop__if19_else:
+	pop__if19_exit:
+	2 overf readm 1 add readm 0 dupt pop
+	2 overf readm readm 1 dupt pop
+	2 overf readm 1 #free pushp pop
+	0 overf dup 2 overf printm pop
+	1 overf popr
+	popr
+
+main:; void: []
+	inits(5); [in: int, goal: int, stack1: Stack*, stack2: Stack*, i: int]
+	flip
+	61 61 61 32 78 117 109 98 101 114 32 103 97 109 101 32 61 61 61 10 0 21 #stralloc pushp 1 #printf pushp pop
+	27 1 dupt pop
+	main__while20:
+	0 overf 1 overf eq not not #main__while20_exit exch goto
+	103 97 109 101 47 110 117 109 98 101 114 95 103 97 109 101 47 84 121 112 101 32 110 117 109 98 101 114 62 32 0 31 #stralloc pushp 1 #printf pushp pop
+	0 #getint pushp 0 dupt pop
+	main__while21:
+	0 #getc pushp 10 eq not not #main__while21_exit exch goto
+	#main__while21 1 goto
+	main__while21_exit:
+	main__if22:
+	0 overf 1 overf lt not #main__if22_else exch goto
+	84 111 111 32 115 109 97 108 108 33 10 0 12 #stralloc pushp 1 #printf pushp pop
+#main__if22_exit 1 goto
+	main__if22_else:
+	main__if22_exit:
+	main__if23:
+	0 overf 1 overf gt not #main__if23_else exch goto
+	84 111 111 32 108 97 114 103 101 33 10 0 12 #stralloc pushp 1 #printf pushp pop
+#main__if23_exit 1 goto
+	main__if23_else:
+	main__if23_exit:
+	#main__while20 1 goto
+	main__while20_exit:
+	89 111 117 32 119 111 110 33 10 0 10 #stralloc pushp 1 #printf pushp pop
+	61 61 61 32 83 116 97 99 107 32 103 97 109 101 32 61 61 61 10 0 20 #stralloc pushp 1 #printf pushp pop
+	0 #createStack pushp 2 dupt pop
+	0 #createStack pushp 3 dupt pop
+	0 4 dupt pop
+	main__for24:
+	4 overf 2 lt not #main__for24_exit exch goto
+	103 97 109 101 47 115 116 97 99 107 95 103 97 109 101 47 83 116 97 99 107 49 62 32 0 25 #stralloc pushp 1 #printf pushp pop
+	0 #getint pushp 0 dupt pop
+	main__while25:
+	0 #getc pushp 10 eq not not #main__while25_exit exch goto
+	#main__while25 1 goto
+	main__while25_exit:
+	2 ref 0 overf 2 #push pushp pop
+	103 97 109 101 47 115 116 97 99 107 95 103 97 109 101 47 83 116 97 99 107 50 62 32 0 25 #stralloc pushp 1 #printf pushp pop
+	0 #getint pushp 0 dupt pop
+	main__while26:
+	0 #getc pushp 10 eq not not #main__while26_exit exch goto
+	#main__while26 1 goto
+	main__while26_exit:
+	3 ref 0 overf 2 #push pushp pop
+	4 overf 1 add dup 4 dupt pop pop
+	#main__for24 1 goto
+	main__for24_exit:
+	0 4 dupt pop
+	main__for27:
+	4 overf 2 lt not #main__for27_exit exch goto
+	103 97 109 101 47 115 116 97 99 107 95 103 97 109 101 47 83 116 97 99 107 50 62 32 0 25 #stralloc pushp 1 #printf pushp pop
+	0 #getint pushp 0 dupt pop
+	main__while28:
+	0 #getc pushp 10 eq not not #main__while28_exit exch goto
+	#main__while28 1 goto
+	main__while28_exit:
+	main__if29:
+	0 overf 3 ref 1 #pop pushp eq not not #main__if29_else exch goto
+	87 114 111 110 103 33 10 0 8 #stralloc pushp 1 #printf pushp pop
+#main__if29_exit 1 goto
+	main__if29_else:
+	main__if29_exit:
+	103 97 109 101 47 115 116 97 99 107 95 103 97 109 101 47 83 116 97 99 107 49 62 32 0 25 #stralloc pushp 1 #printf pushp pop
+	0 #getint pushp 0 dupt pop
+	main__while30:
+	0 #getc pushp 10 eq not not #main__while30_exit exch goto
+	#main__while30 1 goto
+	main__while30_exit:
+	main__if31:
+	0 overf 2 ref 1 #pop pushp eq not not #main__if31_else exch goto
+	87 114 111 110 103 33 10 0 8 #stralloc pushp 1 #printf pushp pop
+#main__if31_exit 1 goto
+	main__if31_else:
+	main__if31_exit:
+	4 overf 1 add dup 4 dupt pop pop
+	#main__for27 1 goto
+	main__for27_exit:
+	0 popr
+	popr
+

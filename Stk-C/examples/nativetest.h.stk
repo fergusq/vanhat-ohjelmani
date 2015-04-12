@@ -1,0 +1,18 @@
+#__init pushr popr
+
+__init:
+	40 0 printm 1 1 printm 0 2 printm 10000 3 printm
+	#__main pushr
+	popr
+
+__main:
+	0 #main pushp
+	popr
+
+countUp:; void: [times: int]
+	inits(0); []
+	flip
+	0 overf 0 callf pop
+	0 1 callf pop
+	popr
+

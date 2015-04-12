@@ -1,0 +1,319 @@
+0: nop 
+1: push 72
+2: push 101
+3: push 108
+4: push 108
+5: push 111
+6: push 32
+7: push 87
+8: push 111
+9: push 114
+10: push 108
+11: push 100
+12: push 33
+13: push 10
+14: push 0
+15: push 14
+16: push_int 307
+17: pushp 
+18: push 1
+19: push 0
+20: print 
+21: push 10
+22: push 1
+23: print 
+24: push 63
+25: pushr 
+26: push 2
+27: push 0
+28: print 
+29: push 10
+30: push 1
+31: print 
+32: push 20
+33: push 1
+34: push 127
+35: pushp 
+36: push 0
+37: print 
+38: push 10
+39: push 1
+40: print 
+41: push 3
+42: push 0
+43: print 
+44: push 10
+45: push 1
+46: print 
+47: push 146
+48: pushr 
+49: push 0
+50: print 
+51: push 10
+52: push 1
+53: print 
+54: push 4
+55: push 0
+56: print 
+57: push 10
+58: push 1
+59: print 
+60: push 169
+61: pushr 
+62: popr 
+63: nop 
+64: push 0
+65: push 0
+66: push 0
+67: push 0
+68: exch 
+69: pop 
+70: push 1
+71: rotl 
+72: exch 
+73: exch 
+74: pop 
+75: rotr 
+76: nop 
+77: dup 
+78: push 20
+79: lt 
+80: not 
+81: push 125
+82: exch 
+83: goto 
+84: dup 
+85: rotl 
+86: dup 
+87: exch 
+88: rotr 
+89: add 
+90: rotl 
+91: exch 
+92: rotl 
+93: exch 
+94: exch 
+95: pop 
+96: rotr 
+97: rotr 
+98: rotl 
+99: dup 
+100: exch 
+101: rotr 
+102: exch 
+103: pop 
+104: rotl 
+105: rotl 
+106: dup 
+107: exch 
+108: rotr 
+109: exch 
+110: rotr 
+111: rotl 
+112: exch 
+113: exch 
+114: pop 
+115: rotr 
+116: dup 
+117: push 0
+118: print 
+119: push 10
+120: push 1
+121: print 
+122: push 76
+123: push 1
+124: goto 
+125: nop 
+126: popr 
+127: nop 
+128: push 0
+129: nop 
+130: push 1
+131: add 
+132: dup 
+133: push 0
+134: print 
+135: push 44
+136: push 1
+137: print 
+138: dup 
+139: over 
+140: eq 
+141: not 
+142: push 129
+143: exch 
+144: goto 
+145: popr 
+146: nop 
+147: push 0
+148: push 1
+149: nop 
+150: dup 
+151: over 
+152: add 
+153: rotl 
+154: pop 
+155: dup 
+156: push 0
+157: print 
+158: push 44
+159: push 1
+160: print 
+161: dup 
+162: push 50
+163: gt 
+164: not 
+165: push 149
+166: exch 
+167: goto 
+168: popr 
+169: nop 
+170: push 0
+171: push 0
+172: push 0
+173: push 0
+174: push 0
+175: push 0
+176: push 0
+177: push 12
+178: rotl 
+179: exch 
+180: exch 
+181: pop 
+182: rotr 
+183: push 13
+184: rotl 
+185: exch 
+186: exch 
+187: pop 
+188: rotr 
+189: push 14
+190: rotl 
+191: exch 
+192: rotl 
+193: exch 
+194: exch 
+195: pop 
+196: rotr 
+197: rotr 
+198: push 15
+199: rotl 
+200: exch 
+201: rotl 
+202: exch 
+203: rotl 
+204: exch 
+205: rotl 
+206: exch 
+207: exch 
+208: pop 
+209: rotr 
+210: rotr 
+211: rotr 
+212: rotr 
+213: push 16
+214: rotl 
+215: exch 
+216: rotl 
+217: exch 
+218: rotl 
+219: exch 
+220: rotl 
+221: exch 
+222: rotl 
+223: exch 
+224: exch 
+225: pop 
+226: rotr 
+227: rotr 
+228: rotr 
+229: rotr 
+230: rotr 
+231: push 17
+232: rotl 
+233: exch 
+234: rotl 
+235: exch 
+236: rotl 
+237: exch 
+238: rotl 
+239: exch 
+240: rotl 
+241: exch 
+242: rotl 
+243: exch 
+244: exch 
+245: pop 
+246: rotr 
+247: rotr 
+248: rotr 
+249: rotr 
+250: rotr 
+251: rotr 
+252: push 18
+253: rotl 
+254: exch 
+255: rotl 
+256: exch 
+257: rotl 
+258: exch 
+259: rotl 
+260: exch 
+261: rotl 
+262: exch 
+263: rotl 
+264: exch 
+265: rotl 
+266: exch 
+267: exch 
+268: pop 
+269: rotr 
+270: rotr 
+271: rotr 
+272: rotr 
+273: rotr 
+274: rotr 
+275: rotr 
+276: rotl 
+277: dup 
+278: exch 
+279: rotr 
+280: push 0
+281: print 
+282: push 10
+283: push 1
+284: print 
+285: rotl 
+286: rotl 
+287: rotl 
+288: rotl 
+289: rotl 
+290: dup 
+291: exch 
+292: rotr 
+293: exch 
+294: rotr 
+295: exch 
+296: rotr 
+297: exch 
+298: rotr 
+299: exch 
+300: rotr 
+301: push 0
+302: print 
+303: push 10
+304: push 1
+305: print 
+306: popr 
+307: nop 
+308: nop 
+309: dup 
+310: push 1
+311: print 
+312: push 0
+313: eq 
+314: not 
+315: push_int 308
+316: exch 
+317: goto 
+318: popr 

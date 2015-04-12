@@ -1,0 +1,423 @@
+#__init pushr popr
+
+__init:
+	40 0 printm 1 1 printm 0 2 printm 10000 3 printm
+	#__main pushr
+	popr
+
+__main:
+	0 #main pushp
+	popr
+
+stralloc:
+	0 0 0 
+	flip
+	0 1 dupt pop
+	stralloc__dowhile1:
+	1 overf 1 add 1 dupt pop
+	0 overf 1 add 0 dupt pop
+		0 overf 3 add overf 0 eq not not #stralloc__dowhile1_exit exch goto
+	#stralloc__dowhile1 1 goto
+	stralloc__dowhile1_exit:
+	1 overf 1 add 1 dupt pop
+	0 overf 1 add 0 dupt pop
+	#malloc 1 overf exch 1 exch pushp 2 dupt pop
+	0 0 dupt pop
+	stralloc__dowhile2:
+		0 overf 3 add overf dup 2 overf 0 overf add printm pop
+	0 overf 1 add 0 dupt pop
+		0 overf 3 add overf 0 eq not not #stralloc__dowhile2_exit exch goto
+	#stralloc__dowhile2 1 goto
+	stralloc__dowhile2_exit:
+		0 overf 3 add overf dup 2 overf 0 overf add printm pop
+	2 overf popr
+	popr
+
+call:
+	
+	flip
+	pushr popr
+	popr
+
+malloc:
+	0 0 0 0 0 0 0 0 
+	flip
+	1 readm 0 dupt pop
+	1 1 dupt pop
+	malloc__label_continue:
+	malloc__while3:
+	1 overf not #malloc__while3_exit exch goto
+	0 overf 1 add 0 dupt pop
+	0 overf 3 dupt pop
+	0 overf readm 4 dupt pop
+	malloc__if4:
+	4 overf 1 eq not #malloc__if4_else exch goto
+	0 overf 1 add 0 dupt pop
+	0 overf readm 2 dupt pop
+	0 overf 2 overf add 1 add 0 dupt pop
+	#malloc__label_continue 1 goto
+	#malloc__if4_exit 1 goto
+	malloc__if4_else:
+	malloc__if4_exit:
+	0 overf 1 add 0 dupt pop
+	0 overf readm 2 dupt pop
+	malloc__if5:
+	2 overf 8 overf 4 add gt not #malloc__if5_else exch goto
+	0 1 dupt pop
+	1 dup 3 overf printm pop
+	8 overf dup 0 overf printm pop
+	0 overf 8 overf add 1 add 5 dupt pop
+	8 overf dup 5 overf printm pop
+	2 overf 8 overf sub 3 sub 6 dupt pop
+	malloc__if6:
+	2 overf 8 overf 3 add gt not #malloc__if6_else exch goto
+	0 overf 8 overf add 2 add 7 dupt pop
+	0 dup 7 overf printm pop
+	7 overf 1 add 7 dupt pop
+	6 overf dup 7 overf printm pop
+	7 overf 1 add 6 overf add 7 dupt pop
+	6 overf dup 7 overf printm pop
+	#malloc__if6_exit 1 goto
+	malloc__if6_else:
+	malloc__if6_exit:
+	#malloc__label_break_while 1 goto
+	#malloc__if5_exit 1 goto
+	malloc__if5_else:
+	malloc__if5_exit:
+	#malloc__while3 1 goto
+	malloc__while3_exit:
+	malloc__label_break_while:
+	0 overf 1 add 0 dupt pop
+	0 overf popr
+	popr
+
+free:
+	0 0 0 0 0 0 
+	flip
+	free__if7:
+	6 overf 0 eq not #free__if7_else exch goto
+	0 popr
+	#free__if7_exit 1 goto
+	free__if7_else:
+	free__if7_exit:
+	free__if8:
+	6 overf 2 sub readm 1 eq not not #free__if8_else exch goto
+	#error 83 101 103 109 101 110 116 97 116 105 111 110 32 102 97 117 108 116 0 19 #stralloc pushp exch 47 104 111 109 101 47 105 105 107 107 97 47 46 115 116 107 99 47 115 116 100 108 105 98 47 115 116 100 46 104 0 31 #stralloc pushp exch 132 exch 3 exch pushp pop
+	#free__if8_exit 1 goto
+	free__if8_else:
+	free__if8_exit:
+	6 overf 1 sub 0 dupt pop
+	0 overf readm 0 dupt pop
+	6 overf 0 overf add 1 add 1 dupt pop
+	free__label_doTestAddr:
+	free__if9:
+	1 overf 9999 lt not #free__if9_else exch goto
+	free__if10:
+	1 overf readm 0 eq not #free__if10_else exch goto
+	1 overf 1 add 2 dupt pop
+	0 overf 3 add 2 overf readm add 0 dupt pop
+	6 overf 0 overf add 1 add 1 dupt pop
+	#free__if10_exit 1 goto
+	free__if10_else:
+	free__if10_exit:
+	#free__if9_exit 1 goto
+	free__if9_else:
+	free__if9_exit:
+	6 overf 3 sub 1 dupt pop
+	1 overf readm 3 dupt pop
+	1 overf 3 overf sub 2 sub 1 dupt pop
+	free__if11:
+	1 overf 0 gt not #free__if11_else exch goto
+	free__if12:
+	1 overf readm 0 eq not #free__if12_else exch goto
+	1 overf 1 add 2 dupt pop
+	0 overf 3 add 2 overf readm add 0 dupt pop
+	1 overf 2 add 6 dupt pop
+	#free__if12_exit 1 goto
+	free__if12_else:
+	free__if12_exit:
+	#free__if11_exit 1 goto
+	free__if11_else:
+	free__if11_exit:
+	6 overf 1 sub 4 dupt pop
+	0 overf dup 4 overf printm pop
+	6 overf 2 sub 4 dupt pop
+	0 dup 4 overf printm pop
+	6 overf 0 overf add 5 dupt pop
+	0 overf dup 5 overf printm pop
+	popr
+
+error:
+	
+	flip
+	#printf 37 115 58 37 105 58 32 37 115 10 0 11 #stralloc pushp exch 1 overf exch 2 overf exch 0 overf exch 4 exch pushp pop
+	throw
+	popr
+
+raw:
+	flip
+	0 0 callf
+	popr
+
+call_api_keypad:
+	flip
+	0 1 callf
+	popr
+
+noecho:
+	flip
+	0 2 callf
+	popr
+
+initscr:
+	flip
+	0 3 callf
+	popr
+
+endwin:
+	flip
+	0 4 callf
+	popr
+
+curs_set:
+	flip
+	0 overf 5 callf pop
+	0 6 callf
+	popr
+
+getch:
+	flip
+	0 7 callf
+	popr
+
+mvaddch:
+	flip
+	0 overf 8 callf pop
+	1 overf 9 callf pop
+	2 overf 10 callf pop
+	0 11 callf
+	popr
+
+teeMato:
+	0 0 0 0 
+	flip
+	#malloc 4 exch 1 exch pushp 0 dupt pop
+	4 overf 0 overf printm 0 pop
+	5 overf 0 overf 1 add printm 0 pop
+	6 overf 0 overf 2 add printm 0 pop
+	0 3 dupt pop
+	0 2 dupt pop
+	teeMato__while13:
+	3 overf 6 overf lt not #teeMato__while13_exit exch goto
+	3 overf 1 add dup 3 dupt pop pop
+	#malloc 4 exch 1 exch pushp 1 dupt pop
+	4 overf 1 overf printm 0 pop
+	5 overf 1 overf 1 add printm 0 pop
+	3 overf 1 overf 2 add printm 0 pop
+	2 overf 1 overf 3 add printm 0 pop
+	1 overf 2 dupt pop
+	#teeMato__while13 1 goto
+	teeMato__while13_exit:
+	2 overf 0 overf 3 add printm 0 pop
+	0 overf popr
+	popr
+
+piirraPelikantta:
+	0 0 0 
+	flip
+	0 0 dupt pop
+	piirraPelikantta__for14:
+	0 overf 32 lt not #piirraPelikantta__for14_exit exch goto
+	0 1 dupt pop
+	piirraPelikantta__for15:
+	1 overf 32 lt not #piirraPelikantta__for15_exit exch goto
+	piirraPelikantta__if16:
+	3 overf readm 0 overf add readm 1 overf add readm readm 1 eq not #piirraPelikantta__if16_else exch goto
+	3 overf readm 0 overf add readm 1 overf add readm 1 add readm 2 dupt pop
+	piirraPelikantta__if17:
+	4 overf 2 overf eq not not #piirraPelikantta__if17_else exch goto
+	#mvaddch 2 overf 1 add readm exch 2 overf readm exch 109 exch 3 exch pushp pop
+	#piirraPelikantta__if17_exit 1 goto
+	piirraPelikantta__if17_else:
+	#mvaddch 2 overf 1 add readm exch 2 overf readm exch 64 exch 3 exch pushp pop
+	piirraPelikantta__if17_exit:
+	#piirraPelikantta__if16_exit 1 goto
+	piirraPelikantta__if16_else:
+	piirraPelikantta__if18:
+	3 overf readm 0 overf add readm 1 overf add readm readm 2 eq not #piirraPelikantta__if18_else exch goto
+	#mvaddch 1 overf exch 0 overf exch 35 exch 3 exch pushp pop
+	#piirraPelikantta__if18_exit 1 goto
+	piirraPelikantta__if18_else:
+	#mvaddch 1 overf exch 0 overf exch 46 exch 3 exch pushp pop
+	0 2 dupt pop
+	piirraPelikantta__if18_exit:
+	piirraPelikantta__if16_exit:
+	1 overf 1 add dup 1 dupt pop pop
+	#piirraPelikantta__for15 1 goto
+	piirraPelikantta__for15_exit:
+	0 overf 1 add dup 0 dupt pop pop
+	#piirraPelikantta__for14 1 goto
+	piirraPelikantta__for14_exit:
+	popr
+
+paivitaPelikantta:
+	0 0 0 0 0 0 0 0 0 
+	flip
+	0 8 dupt pop
+	paivitaPelikantta__for19:
+	9 overf 1 add readm 8 overf add readm not #paivitaPelikantta__for19_exit exch goto
+	#piirraPelikantta 9 overf exch 9 overf 1 add readm 8 overf add readm exch 2 exch pushp pop
+	0 9 overf readm 9 overf 1 add readm 8 overf add readm readm add readm 9 overf 1 add readm 8 overf add readm 1 add readm add readm 1 add printm 0 pop
+	0 9 overf readm 9 overf 1 add readm 8 overf add readm readm add readm 9 overf 1 add readm 8 overf add readm 1 add readm add readm printm 0 pop
+	9 overf 1 add readm 8 overf add readm readm 4 dupt pop
+	9 overf 1 add readm 8 overf add readm 1 add readm 5 dupt pop
+	0 1 dupt pop
+	#getch 0 exch pushp 0 dupt pop
+	paivitaPelikantta__if20:
+	0 overf 97 eq 9 overf readm 9 overf 1 add readm 8 overf add readm readm 1 sub add readm 9 overf 1 add readm 8 overf add readm 1 add readm add readm readm 0 eq and not #paivitaPelikantta__if20_else exch goto
+	9 overf 1 add readm 8 overf add readm readm 1 sub 9 overf 1 add readm 8 overf add readm printm 0 pop
+	1 1 dupt pop
+	#paivitaPelikantta__if20_exit 1 goto
+	paivitaPelikantta__if20_else:
+	paivitaPelikantta__if20_exit:
+	paivitaPelikantta__if21:
+	0 overf 100 eq 9 overf readm 9 overf 1 add readm 8 overf add readm readm 1 add add readm 9 overf 1 add readm 8 overf add readm 1 add readm add readm readm 0 eq and not #paivitaPelikantta__if21_else exch goto
+	9 overf 1 add readm 8 overf add readm readm 1 add 9 overf 1 add readm 8 overf add readm printm 0 pop
+	1 1 dupt pop
+	#paivitaPelikantta__if21_exit 1 goto
+	paivitaPelikantta__if21_else:
+	paivitaPelikantta__if21_exit:
+	paivitaPelikantta__if22:
+	0 overf 119 eq 9 overf readm 9 overf 1 add readm 8 overf add readm readm add readm 9 overf 1 add readm 8 overf add readm 1 add readm 1 sub add readm readm 0 eq and not #paivitaPelikantta__if22_else exch goto
+	9 overf 1 add readm 8 overf add readm 1 add readm 1 sub 9 overf 1 add readm 8 overf add readm 1 add printm 0 pop
+	1 1 dupt pop
+	#paivitaPelikantta__if22_exit 1 goto
+	paivitaPelikantta__if22_else:
+	paivitaPelikantta__if22_exit:
+	paivitaPelikantta__if23:
+	0 overf 115 eq 9 overf readm 9 overf 1 add readm 8 overf add readm readm add readm 9 overf 1 add readm 8 overf add readm 1 add readm 1 add add readm readm 0 eq and not #paivitaPelikantta__if23_else exch goto
+	9 overf 1 add readm 8 overf add readm 1 add readm 1 add 9 overf 1 add readm 8 overf add readm 1 add printm 0 pop
+	1 1 dupt pop
+	#paivitaPelikantta__if23_exit 1 goto
+	paivitaPelikantta__if23_else:
+	paivitaPelikantta__if23_exit:
+	paivitaPelikantta__if24:
+	0 overf 113 eq not #paivitaPelikantta__if24_else exch goto
+	0 popr
+	#paivitaPelikantta__if24_exit 1 goto
+	paivitaPelikantta__if24_else:
+	paivitaPelikantta__if24_exit:
+	paivitaPelikantta__if25:
+	1 overf not #paivitaPelikantta__if25_else exch goto
+	9 overf 1 add readm 8 overf add readm 2 dupt pop
+	0 3 dupt pop
+	paivitaPelikantta__while26:
+	2 overf 2 add readm not #paivitaPelikantta__while26_exit exch goto
+	2 overf 3 add readm 2 dupt pop
+	2 overf readm 6 dupt pop
+	2 overf 1 add readm 7 dupt pop
+	0 9 overf readm 2 overf readm add readm 2 overf 1 add readm add readm 1 add printm 0 pop
+	0 9 overf readm 2 overf readm add readm 2 overf 1 add readm add readm printm 0 pop
+	4 overf 2 overf printm 0 pop
+	5 overf 2 overf 1 add printm 0 pop
+	6 overf 4 dupt pop
+	7 overf 5 dupt pop
+	2 overf 9 overf readm 2 overf readm add readm 2 overf 1 add readm add readm 1 add printm 0 pop
+	1 9 overf readm 2 overf readm add readm 2 overf 1 add readm add readm printm 0 pop
+	#paivitaPelikantta__while26 1 goto
+	paivitaPelikantta__while26_exit:
+	#paivitaPelikantta__if25_exit 1 goto
+	paivitaPelikantta__if25_else:
+	paivitaPelikantta__if25_exit:
+	9 overf 1 add readm 8 overf add readm 9 overf readm 9 overf 1 add readm 8 overf add readm readm add readm 9 overf 1 add readm 8 overf add readm 1 add readm add readm 1 add printm 0 pop
+	1 9 overf readm 9 overf 1 add readm 8 overf add readm readm add readm 9 overf 1 add readm 8 overf add readm 1 add readm add readm printm 0 pop
+	8 overf 1 add dup 8 dupt pop pop
+	#paivitaPelikantta__for19 1 goto
+	paivitaPelikantta__for19_exit:
+	1 popr
+	popr
+
+makeMatrix:
+	0 0 0 
+	flip
+	#malloc 3 overf exch 1 exch pushp 2 dupt pop
+	0 0 dupt pop
+	makeMatrix__for27:
+	0 overf 3 overf lt not #makeMatrix__for27_exit exch goto
+	#malloc 4 overf exch 1 exch pushp dup 2 overf 0 overf add printm pop
+	0 1 dupt pop
+	makeMatrix__for28:
+	1 overf 4 overf lt not #makeMatrix__for28_exit exch goto
+	5 overf 2 overf 0 overf add readm 1 overf add printm 0 pop
+	1 overf 1 add dup 1 dupt pop pop
+	#makeMatrix__for28 1 goto
+	makeMatrix__for28_exit:
+	0 overf 1 add dup 0 dupt pop pop
+	#makeMatrix__for27 1 goto
+	makeMatrix__for27_exit:
+	2 overf popr
+	popr
+
+freeMatrix:
+	0 0 
+	flip
+	0 0 dupt pop
+	freeMatrix__for29:
+	0 overf 3 overf lt not #freeMatrix__for29_exit exch goto
+	0 1 dupt pop
+	freeMatrix__for30:
+	1 overf 4 overf lt not #freeMatrix__for30_exit exch goto
+	0 2 overf 0 overf add readm 1 overf add printm 0 pop
+	1 overf 1 add dup 1 dupt pop pop
+	#freeMatrix__for30 1 goto
+	freeMatrix__for30_exit:
+	#free 2 overf 0 overf add readm exch 1 exch pushp pop
+	0 overf 1 add dup 0 dupt pop pop
+	#freeMatrix__for29 1 goto
+	freeMatrix__for29_exit:
+	#free 2 overf exch 1 exch pushp pop
+	0 popr
+	popr
+
+main:
+	0 0 0 0 
+	flip
+	#initscr 0 exch pushp pop
+	#call_api_keypad 0 exch pushp pop
+	#raw 0 exch pushp pop
+	#noecho 0 exch pushp pop
+	#curs_set 0 exch 1 exch pushp pop
+	#malloc 2 exch 1 exch pushp 0 dupt pop
+	#malloc 100 exch 1 exch pushp 0 overf 1 add printm 0 pop
+	#makeMatrix 32 exch 32 exch 0 exch 3 exch pushp 0 overf printm 0 pop
+	0 1 dupt pop
+	main__for31:
+	1 overf 32 lt not #main__for31_exit exch goto
+	0 2 dupt pop
+	main__for32:
+	2 overf 32 lt not #main__for32_exit exch goto
+	#malloc 2 exch 1 exch pushp 0 overf readm 1 overf add readm 2 overf add printm 0 pop
+	main__if33:
+	1 overf 0 eq 2 overf 0 eq or 1 overf 31 eq or 2 overf 31 eq or not #main__if33_else exch goto
+	2 0 overf readm 1 overf add readm 2 overf add readm printm 0 pop
+	#main__if33_exit 1 goto
+	main__if33_else:
+	0 0 overf readm 1 overf add readm 2 overf add readm printm 0 pop
+	main__if33_exit:
+	2 overf 1 add dup 2 dupt pop pop
+	#main__for32 1 goto
+	main__for32_exit:
+	1 overf 1 add dup 1 dupt pop pop
+	#main__for31 1 goto
+	main__for31_exit:
+	#teeMato 5 exch 5 exch 4 exch 3 exch pushp 3 dupt pop
+	3 overf 0 overf 1 add readm 0 add printm 0 pop
+	0 0 overf 1 add readm 1 add printm 0 pop
+	main__dowhile34:
+	#paivitaPelikantta 0 overf exch 1 exch pushp not #main__dowhile34_exit exch goto
+	#main__dowhile34 1 goto
+	main__dowhile34_exit:
+	#endwin 0 exch pushp pop
+	0 popr
+	popr
+

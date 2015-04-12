@@ -1,0 +1,82 @@
+== INSTRUCTIONS
+
+ 0 - nop = no operation
+
+STACK
+ 1 - push <i> = push <i> to stack
+ 2 - push_int <i> = push <i> to stack
+ 3 - push_double <i> = push <i> to stack
+ 4 - pop = pop value from stack and return it (no use)
+ 5 - dup = duplicate top value of stack
+// 4 - drop = drop value from stack DEPRECATED
+ 6 - flip/reverse = swap stack
+ 7 - exch = swap top values of stack
+ 8 - over = rotate to left, duplicate value, rotate to right
+ 9 - rotl = rotate to left
+10 - rotr = rotate to right
+
+MATH
+11 - add = add to top values of stack
+12 - sub = sub --..--
+13 - mul = mul --..--
+14 - div = div --..--
+15 - exp = exp --..--
+16 - mod = mod --..--
+
+LOGIC
+17 - eq = eq to top values of stack
+18 - gt = gt --..--
+19 - lt = lt --..--
+20 - and = and --..--
+21 - or = or --..--
+22 - xor = xor --..--
+23 - not = not top value of stack
+
+I/O
+24 - print = print to stream pop() text pop()
+25 - read = read from stream pop()
+
+I/O
+26 - printm = print to memory loc pop() value pop()
+27 - readm = read from memory loc pop()
+
+GOTO
+28 - goto = jump to line pop() if pop() == true
+29 - pushr = push current stack to higher stack and init new stack
+30 - popr = pop stack from higher stack and return top value of stack
+31 - pushp = push current stack to higher stack and init new stack with values pop()* do pop()
+32 - popp = pop stack from higher stack and return pop() x values from stack
+
+== STREAMS
+
+0 - STD - INT
+1 - STD - CHAR
+
+== VIRTUAL MACHINE SPEC
+
+There is memory (int[30000]).
+
+== EXAMPLE CODE
+
+Prints '4':
+
+ 0: 2
+ 1: 2
+ 2: add
+ 3: 0
+ 4: print
+
+Counts to ten:						in C
+
+ 0: 0		# init stack with 0			int i = 0;
+ 1: 1		# push 1 to stack			label1:
+ 2: add		# push pop()+pop()			i = i + 1;
+ 3: dup		# duplicate top value of the stack	
+ 4: 10		# push 10 to stack			
+ 5: eq		# push pop() == pop()			boolean b = (i == 10);
+ 6: not		# push !pop()				b = !b;
+ 7: dup
+ 8: 0							
+ 9: print						printf("%i", i);
+10: 1		# push 1 to stack			
+11: goto	# jump to line 1 if number is ten	if (b) goto label1;

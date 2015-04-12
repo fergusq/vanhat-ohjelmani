@@ -1,0 +1,9 @@
+200
+fib:
+	dup dup 1 eq exch 0 eq or exch dup 0 gt not over or
+	#exit exch goto
+		dup 1 sub #fib pushr
+		exch 2 sub #fib pushr
+		add
+		0 print
+	exit: 0 print popr

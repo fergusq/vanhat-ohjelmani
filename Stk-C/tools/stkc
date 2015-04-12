@@ -1,0 +1,1 @@
+cpp -I "./examples/stdlib" $1 | java -cp bin:../ParserTools/bin org.kaivos.stkc.parser.StkCParser -i
